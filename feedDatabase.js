@@ -1,10 +1,10 @@
 const { MongoClient } = require("mongodb");
-const { generateFakeCustomersData } = require ('./helper/generateFakeCustomerData')
+const { generateFakeCustomersData } = require ('./helper/generateFakeCustomerData');
 
-const NUMBER_OF_CUSTOMERS_TO_GENERATE = 30000
-const uri = 'TO_REPLACE'
+const NUMBER_OF_CUSTOMERS_TO_GENERATE = 30000;
+const { mongoUri } = require('./mongoUri');
 
-const client = new MongoClient(uri);
+const client = new MongoClient(mongoUri);
 const fakeCustomers = generateFakeCustomersData(NUMBER_OF_CUSTOMERS_TO_GENERATE);
 
 async function run() {

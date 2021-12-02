@@ -21,7 +21,7 @@ const generateFakeCustomersData = (numberOfCustomers) => {
 
 /**
  * Generate single fake customer (French)
- * @return {{addresses: Array<{city, postalCode, line2: *, line1: *}>, addressesStr: Array<string>, identity: {firstName, lastName}, enable: boolean, phoneNumbers: [], email: string}}
+ * @returns {{firstName: *, lastName: *, addresses: Array<{city, postalCode, line2: *, line1: *}>, postalCodes: string[], enable: *, addressesStr, phoneNumbers: *[], email: string}}
  */
 const generateFakeCustomer = () => {
     const identity = {
@@ -32,10 +32,10 @@ const generateFakeCustomer = () => {
     const phoneNumbers = generatePhoneNumbers(MAX_NUMBER_OF_PHONE_NUMBERS)
     const email = generateEmail(identity)
     return {
-        identity,
+        ...identity,
         addresses,
         addressesStr: formatAddresses(addresses),
-        postalCodes: addresses.map( address => `${address.postalCode}` ),
+        postalCodes: addresses.map( address => `${address.postalCode}`),
         phoneNumbers,
         email,
         enable: fakerator.random.boolean(),
