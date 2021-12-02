@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Atlas-search-meetup-ui</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <header>
+      <h1>Github: "atlas-search-meetup-ui"</h1>
+      <p>Simple Atlas Search query demo</p>
+    </header>
+    <main class="card">
+      <div class="form-group card-header search-panel">
+        <form method="POST" action="/search">
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <label for="firstName">First name</label>
+              <input type="text" class="form-control" name="firstName" id="firstNameInput" placeholder="First name" value="<%= searchForm.firstName %>">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="lastName">Last name</label>
+              <input type="text" class="form-control" name="lastName" id="lastNameInput" placeholder="Last name" value="<%= searchForm.lastName %>">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label for="email">Email</label>
+              <div class="input-group">
+                <input type="text" class="form-control" name="email" id="emailInput" placeholder="Email" value="<%= searchForm.email %>">
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="city">City</label>
+              <input type="text" class="form-control" name="city" id="cityInput" placeholder="City" value="<%= searchForm.city %>">
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="postalCode">Zip</label>
+              <input type="text" class="form-control" name="postalCode" id="postalCodeInput" placeholder="59000" value="<%= searchForm.postalCode %>">
+            </div>
+            <div class="col-md-3 mb-3">
+              <label for="postalCode">Phone</label>
+              <input type="text" class="form-control" name="phoneNumber" id="phoneNumberInput" placeholder="0610101010" value="<%= searchForm.phoneNumber %>">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="activeCheck" value="<%= searchForm.activeCheck %>" id="activeCheck">
+              <label class="form-check-label" for="activeCheck">
+                Active contact
+              </label>
+            </div>
+          </div>
+          <div class="form-group float-right">
+            <input class="btn btn-primary" type="submit"/>
+          </div>
+        </form>
+      </div>
+      <div class="card-body search-results">
+        <div class="form-group">
+          <label for="query">Query</label>
+          <textarea class="form-control" id="query" rows="3"><%= JSON.stringify(mongoAggregation, null, 4) %></textarea>
+        </div>
+
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+          <thead>
+          <tr>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Addresses</th>
+            <th>PostalCodes</th>
+            <th>Phones</th>
+            <th>Email</th>
+            <th>Enable</th>
+            <th>Score</th>
+            <th>Highlight</th>
+          </tr>
+          </thead>
+          <tbody>
+            <% for (var i = 0; i < searchResult.length; i++) { %>
+              <tr>
+                <td><%= searchResult[i].identity?.firstName %></td>
+                <td><%= searchResult[i].identity?.lastName %></td>
+                <td><%= formatAddresses(searchResult[i].addresses) %></td>
+                <td><%= searchResult[i].postalCodes %></td>
+                <td><%= searchResult[i].phoneNumbers %></td>
+                <td><%= searchResult[i].email %></td>
+                <td><%= searchResult[i].enable %></td>
+                <td><%= searchResult[i].score %></td>
+                <td><%= JSON.stringify(searchResult[i].highlights, null, 2) %></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </body>
+</html>
