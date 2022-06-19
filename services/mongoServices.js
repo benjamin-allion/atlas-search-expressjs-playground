@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient
 let mongoCollection = undefined;
-const { mongoUri } = require('../mongoUri')
+const { mongoUri, mongoCollectionName } = require('../mongoUri')
 
 /**
  * Method to get current MongoDB database connexion
@@ -10,7 +10,7 @@ const getMongoCollection = async () => {
     if (mongoCollection) { return mongoCollection }
 
     const connection = await MongoClient.connect(mongoUri)
-    mongoCollection = await connection.db().collection('customers')
+    mongoCollection = await connection.db().collection(mongoCollectionName)
     return mongoCollection
 }
 
